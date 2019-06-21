@@ -4,7 +4,7 @@
 
 ## Install
 
-Install with [npm](https://www.npmjs.com/)
+Install with [npm](https://www.npmjs.com/).
 
 ```sh
 $ npm i -D react-experiment
