@@ -2,13 +2,17 @@
   "name": "@boston/react-experiment",
   "version": "1.0.0",
   "description": "A React component to load Boston experiments and render active or inactive children.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makeprogress/react-experiment"
+  },
   "main": "./dist/index.js",
   "module": "./index.js",
   "type": "module",
   "scripts": {
     "build": "webpack",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build"
+    "postinstall": "rm -rf ./dist && npm run build -- --display=none"
   },
   "keywords": [
     "a|b",
@@ -19,7 +23,7 @@
     "react",
     "toggle"
   ],
-  "author": "boston",
+  "author": "makeprogress",
   "license": "MIT",
   "peerDependencies": {
     "prop-types": "^15.7.2",
@@ -36,10 +40,13 @@
     "eslint": "^5.16.0",
     "eslint-plugin-benderthecrime": "^2.3.0",
     "eslint-plugin-react": "^7.13.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "styled-components": "^4.2.0",
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4"
   },
   "dependencies": {
-    "@boston/js": "file:../boston/packages/node-boston"
+    "@boston/js": "file:../node-boston"
   }
 }

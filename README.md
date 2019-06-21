@@ -1,4 +1,4 @@
-# react-experiment
+# @boston/react-experiment
 
 > A React component to load Boston experiments and render active or inactive children.
 
@@ -7,7 +7,7 @@
 Install with [npm](https://www.npmjs.com/)
 
 ```sh
-$ npm i react-experiment --save-dev
+$ npm i -D react-experiment
 ```
 
 ## Usage
@@ -35,17 +35,19 @@ export default AlwaysBlue
 
 ## Props
 
-| Name          | Type     | Description                                    | Default                       |
-| ------------- | -------- | ---------------------------------------------- | ----------------------------- |
-| apiKey        | string   | Boston API Key                                 |                               |
-| apiUrl        | string   | Boston API Url                                 | "https://api.bostonapp.co"    |
-| context       | object   | Context used to uniquely identify a user       |                               |
-| experimentId  | string   | A Boston experiment id                         |                               |
-| showErrors    | bool     | Specifies whether API errors should be shown   | `false`                       |
+| Name          | Type          | Description                                    | Default                       |
+| ------------- | ------------- | ---------------------------------------------- | ----------------------------- |
+| apiKey        | string        | Boston API Key                                 |                               |
+| apiUrl        | string        | Boston API Url                                 | "https://api.bostonapp.co"    |
+| context       | object|string | Context used to uniquely identify a user       |                               |
+| experimentId  | string        | A Boston experiment id                         |                               |
+| showErrors    | bool          | Specifies whether API errors should be shown   | `false`                       |
+
+`context` is either of type `shape`, which supports a single property, `uniqueId`, or a string. This property represents identifying information about a user and may be used to blacklist or whitelist active experiment users.
 
 ## Contributing
 
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/Joe%20Groseclose/react-experiment/issues)
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/Joe%20Groseclose/react-experiment/issues).
 
 ## License
 

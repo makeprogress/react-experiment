@@ -29,9 +29,12 @@ export default class Experiment extends PureComponent {
       PropTypes.node,
       PropTypes.arrayOf(PropTypes.node),
     ]),
-    context: PropTypes.shape({
-      uniqueId: PropTypes.string,
-    }),
+    context: PropTypes.oneOfType([
+      PropTypes.shape({
+        uniqueId: PropTypes.string,
+      }),
+      PropTypes.string,
+    ]),
     experimentId: PropTypes.string.isRequired,
     showErrors: PropTypes.bool,
   }
@@ -48,7 +51,11 @@ export default class Experiment extends PureComponent {
       apiKey: this.props.apiKey,
       apiUrl: this.props.apiUrl,
     })
-    this.boston.isExperimentActive(this.props.experimentId, this.props.context)
+
+    const contextIsPOJsO = Object.prototype.toString.call(this.props.context) === '[object Object]'
+    const context = contextIsPOJsO ? this.props.context : {uniqueId: this.props.context}
+
+    this.boston.isExperimentActive(this.props.experimentId, context)
       .then((active) => this.setState({active}))
       .catch((e) => this.setState({
         active: false,
