@@ -2,6 +2,10 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import boston from '@boston/js'
 
+import Condition, {Else, If} from './Condition'
+
+import {getChildrenByName} from '../util'
+
 export const Active = ({children}) => <>{children}</>
 export const Inactive = ({children}) => <>{children}</>
 
@@ -40,7 +44,6 @@ export default class Experiment extends PureComponent {
   }
 
   static defaultProps = {
-    children: [],
     context: {},
     showErrors: false,
   }
@@ -51,26 +54,32 @@ export default class Experiment extends PureComponent {
       apiKey: this.props.apiKey,
       apiUrl: this.props.apiUrl,
     })
-
-    const contextIsPOJsO = Object.prototype.toString.call(this.props.context) === '[object Object]'
-    const context = contextIsPOJsO ? this.props.context : {uniqueId: this.props.context}
-
-    this.boston.isExperimentActive(this.props.experimentId, context)
-      .then((active) => this.setState({active}))
-      .catch((e) => this.setState({
-        active: false,
-        error: e.message,
-      }))
   }
 
   render() {
-    const children = Array.isArray(this.props.children) ? this.props.children : [this.props.children]
+    const getExperimentChildren = getChildrenByName(this.props)
+    const [Active] = getExperimentChildren('Active')
+    const [Inactive] = getExperimentChildren('Inactive')
+    const contextIsPOJsO = Object.prototype.toString.call(this.props.context) === '[object Object]'
+    const context = contextIsPOJsO ? this.props.context : {uniqueId: this.props.context}
 
     return <>
       {this.props.showErrors && this.state.error && <div>{this.state.error}</div>}
-      {this.state.active && children.filter(({type}) => type && type.name === 'Active')}
-      {!this.state.active && children.filter(({type}) => type && type.name === 'Inactive')}
+      <Condition>
+        {Active && <If 
+          condition={() => this.boston.isExperimentActive(this.props.experimentId, context)}>
+          {Active.props.children}
+        </If>}
+        {Inactive && <Else>{Inactive.props.children}</Else>}
+      </Condition>
     </>
+  }
+
+  static getDerivedStateFromError(e) {
+    return {
+      active: false,
+      error: e.message,
+    }
   }
 
   static get Active() {

@@ -7,7 +7,9 @@
         "plugin:benderthecrime/recommended",
         "plugin:react/recommended"
     ],
-    "globals": {},
+    "globals": {
+        "Promise": true,
+    },
     "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
