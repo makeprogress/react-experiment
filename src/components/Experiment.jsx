@@ -2,8 +2,6 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import boston from '@boston/js'
 
-import Condition, {Else, If} from './Condition'
-
 import {getChildrenByName} from '../util'
 
 export const Active = ({children}) => <>{children}</>
@@ -56,24 +54,33 @@ export default class Experiment extends PureComponent {
     })
   }
 
+  componentDidMount() {
+    const contextIsPOJsO = Object.prototype.toString.call(this.props.context) === '[object Object]'
+    const context = contextIsPOJsO ? this.props.context : {uniqueId: this.props.context}
+
+    return this.boston.isExperimentActive(this.props.experimentId, context)
+      .then((active) => this.setState({active}))
+      .catch((e) => this.setState({error: e.message}))
+  }
+
   render() {
     const getExperimentChildren = getChildrenByName(this.props)
     const [Active] = getExperimentChildren('Active')
     const [Inactive] = getExperimentChildren('Inactive')
-    const contextIsPOJsO = Object.prototype.toString.call(this.props.context) === '[object Object]'
-    const context = contextIsPOJsO ? this.props.context : {uniqueId: this.props.context}
 
-    return <>
-      {this.props.showErrors && this.state.error && <div>{this.state.error}</div>}
-      <Condition>
-        {Active && <If 
-          condition={() => this.boston.isExperimentActive(this.props.experimentId, context)}>
-          {Active.props.children}
-        </If>}
-        {Active && Inactive && <Else>{Inactive.props.children}</Else>}
-        {!Active && Inactive && <If condition={true}>{Inactive.props.children}</If>}
-      </Condition>
-    </>
+    if (this.props.showErrors && this.state.error) {
+      return <div>{this.state.error}</div>
+    }
+
+    if (this.state.active === true && Active) {
+      return Active.props.children
+    }
+
+    if (this.state.active === false && Inactive) {
+      return Inactive.props.children
+    }
+
+    return null
   }
 
   static getDerivedStateFromError(e) {
