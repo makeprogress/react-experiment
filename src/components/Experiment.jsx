@@ -70,7 +70,8 @@ export default class Experiment extends PureComponent {
           condition={() => this.boston.isExperimentActive(this.props.experimentId, context)}>
           {Active.props.children}
         </If>}
-        {Inactive && <Else>{Inactive.props.children}</Else>}
+        {Active && Inactive && <Else>{Inactive.props.children}</Else>}
+        {!Active && Inactive && <If condition={true}>{Inactive.props.children}</If>}
       </Condition>
     </>
   }
