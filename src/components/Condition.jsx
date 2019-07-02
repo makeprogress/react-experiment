@@ -103,11 +103,15 @@ export default class Condition extends PureComponent {
   }
 
   componentDidMount() {
-    this._handleConditional(this.state.if)
+    return this._handleConditional(this.state.if)
   }
 
   render() {
-    return <>{this.state.renderChild}</>
+    if (this.state.renderChild) {
+      return this.state.renderChild.props.children
+    }
+
+    return null
   }
 }
 
