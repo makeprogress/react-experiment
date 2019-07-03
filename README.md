@@ -37,13 +37,14 @@ export default AlwaysBlue
 
 ## Props
 
-| Name          | Type          | Description                                    | Default                       |
-| ------------- | ------------- | ---------------------------------------------- | ----------------------------- |
-| apiKey        | string        | Boston API Key                                 |                               |
-| apiUrl        | string        | Boston API Url                                 | "https://api.bostonapp.co"    |
-| context       | object|string | Context used to uniquely identify a user       |                               |
-| experimentId  | string        | A Boston experiment id                         |                               |
-| showErrors    | bool          | Specifies whether API errors should be shown   | `false`                       |
+| Name                        | Type          | Description                                    | Default                       |
+| --------------------------- | ------------- | ---------------------------------------------- | ----------------------------- |
+| alwaysRenderInactive        | bool          | Should inactive render before API response     | `false`                       |
+| apiKey                      | string        | Boston API Key                                 |                               |
+| apiUrl                      | string        | Boston API Url                                 | "https://api.bostonapp.co"    |
+| context                     | object|string | Context used to uniquely identify a user       |                               |
+| experimentId                | string        | A Boston experiment id                         |                               |
+| showErrors                  | bool          | Specifies whether API errors should be shown   | `false`                       |
 
 `context` is either of type `shape`, which supports a single property, `uniqueId`, or a string. This property represents identifying information about a user and may be used to blacklist or whitelist active experiment users.
 

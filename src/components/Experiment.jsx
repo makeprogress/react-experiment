@@ -25,6 +25,7 @@ export default class Experiment extends PureComponent {
   state = {}
 
   static propTypes = {
+    alwaysRenderInactive: PropTypes.bool,
     apiKey: PropTypes.string,
     apiUrl: PropTypes.string,
     children: PropTypes.oneOfType([
@@ -42,6 +43,7 @@ export default class Experiment extends PureComponent {
   }
 
   static defaultProps = {
+    alwaysRenderInactive: false,
     context: {},
     showErrors: false,
   }
@@ -76,7 +78,10 @@ export default class Experiment extends PureComponent {
       return Active.props.children
     }
 
-    if (this.state.active === false && Inactive) {
+    if (
+      (this.state.active === false && Inactive) ||
+      (this.props.alwaysRenderInactive && Inactive)
+    ) {
       return Inactive.props.children
     }
 
