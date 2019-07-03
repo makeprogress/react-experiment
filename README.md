@@ -33,6 +33,8 @@ const AlwaysBlue = () => <div>
 export default AlwaysBlue
 ```
 
+**NOTE**: No children passed to the `Experiment` component besides `Active` or `Inactive` will be rendered.
+
 ## Props
 
 | Name          | Type          | Description                                    | Default                       |
