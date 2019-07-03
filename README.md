@@ -20,7 +20,12 @@ import React from 'react'
 import Experiment from '@boston/react-experiment'
 
 const AlwaysBlue = () => <div>
-  <Experiment apiKey="KEY" experimentId="ID">
+  <Experiment 
+    alwaysRenderInactive={false}
+    apiKey="KEY" 
+    context={{uniqueId: "test.user@bostonapp.co"}}
+    experimentId="ID"
+    showErrors={false}>
     <Experiment.Active>
       <span red>JK, I'm red!</span>
     </Experiment.Active>
