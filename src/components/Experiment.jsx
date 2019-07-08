@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import boston from '@boston/js'
+import toggles from '@toggles/experiments'
 
 import {getChildrenByName} from '../util'
 
@@ -50,7 +50,7 @@ export default class Experiment extends PureComponent {
 
   constructor(...args) {
     super(...args)
-    this.boston = boston.createExperimentClient({
+    this.toggles = toggles.createExperimentClient({
       apiKey: this.props.apiKey,
       apiUrl: this.props.apiUrl,
     })
@@ -60,7 +60,7 @@ export default class Experiment extends PureComponent {
     const contextIsPOJsO = Object.prototype.toString.call(this.props.context) === '[object Object]'
     const context = contextIsPOJsO ? this.props.context : {uniqueId: this.props.context}
 
-    return this.boston.isExperimentActive(this.props.experimentId, context)
+    return this.toggles.isExperimentActive(this.props.experimentId, context)
       .then((active) => this.setState({active}))
       .catch((e) => this.setState({error: e.message}))
   }

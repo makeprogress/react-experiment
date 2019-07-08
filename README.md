@@ -1,6 +1,6 @@
-# @boston/react-experiment
+# @toggles/react-experiment
 
-> A React component to load Boston experiments and render active or inactive children.
+> A React component to load Toggles experiments and render active or inactive children.
 
 ## Install
 
@@ -11,19 +11,19 @@ $ npm i -D react-experiment
 ```
 
 ## Usage
-Please visit the [Boston app online](https://bostonapp.co/). There, you can create an account and an experiment, configure specific users who should see the experiment, or specify a percent of users who should see the experiment.
+Please visit the [Toggles app online](https://toggles.app/). There, you can create an account and an experiment, configure specific users who should see the experiment, or specify a percent of users who should see the experiment.
 
 Once this is complete, copy the experiment id from the experiment card and your API key from settings (KEY and ID below). Next, include the following component in your app:
 
 ```js
 import React from 'react'
-import Experiment from '@boston/react-experiment'
+import Experiment from '@toggles/react-experiment'
 
 const AlwaysBlue = () => <div>
   <Experiment 
     alwaysRenderInactive={false}
     apiKey="KEY" 
-    context={{uniqueId: "test.user@bostonapp.co"}}
+    context={{uniqueId: "test.user@toggles.app"}}
     experimentId="ID"
     showErrors={false}>
     <Experiment.Active>
@@ -45,10 +45,10 @@ export default AlwaysBlue
 | Name                        | Type          | Description                                    | Default                       |
 | --------------------------- | ------------- | ---------------------------------------------- | ----------------------------- |
 | alwaysRenderInactive        | bool          | Should inactive render before API response     | `false`                       |
-| apiKey                      | string        | Boston API Key                                 |                               |
-| apiUrl                      | string        | Boston API Url                                 | "https://api.bostonapp.co"    |
+| apiKey                      | string        | Toggles API Key                                |                               |
+| apiUrl                      | string        | Toggles API Url                                | "https://api.toggles.co"      |
 | context                     | object|string | Context used to uniquely identify a user       |                               |
-| experimentId                | string        | A Boston experiment id                         |                               |
+| experimentId                | string        | A Toggles experiment id                        |                               |
 | showErrors                  | bool          | Specifies whether API errors should be shown   | `false`                       |
 
 `context` is either of type `shape`, which supports a single property, `uniqueId`, or a string. This property represents identifying information about a user and may be used to blacklist or whitelist active experiment users.
