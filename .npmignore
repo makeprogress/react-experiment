@@ -1,5 +1,6 @@
 .babelrc
 .eslintignore
+.github
 .gitignore
 .storybook
 package-lock.json
