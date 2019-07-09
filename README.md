@@ -15,7 +15,7 @@ Please visit the [Toggles app online](https://toggles.app/). There, you can crea
 
 Once this is complete, copy the experiment id from the experiment card and your API key from settings (KEY and ID below). Next, include the following component in your app:
 
-```js
+```jsx
 import React from 'react'
 import Experiment from '@toggles/react-experiment'
 
