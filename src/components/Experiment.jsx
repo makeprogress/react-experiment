@@ -1,26 +1,12 @@
-import React, {PureComponent} from 'react'
+import React, {Fragment, PureComponent} from 'react'
 import PropTypes from 'prop-types'
 
 import toggles from '@toggles/experiments'
 
 import {getChildrenByName} from '../util'
 
-export const Active = ({children}) => <>{children}</>
-export const Inactive = ({children}) => <>{children}</>
-
-Active.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
-}
-
-Inactive.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
-}
+export const Active = Fragment
+export const Inactive = Fragment
 
 export default class Experiment extends PureComponent {
   state = {}
@@ -68,8 +54,8 @@ export default class Experiment extends PureComponent {
 
   render() {
     const getExperimentChildren = getChildrenByName(this.props)
-    const [Active] = getExperimentChildren('Active')
-    const [Inactive] = getExperimentChildren('Inactive')
+    const [Active] = getExperimentChildren(Active)
+    const [Inactive] = getExperimentChildren(Inactive)
 
     if (this.props.showErrors && this.state.error) {
       return <div>{this.state.error}</div>

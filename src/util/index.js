@@ -1,21 +1,21 @@
-export function getChildrenByName({children}) {
+import {Children} from 'react'
+
+export function getChildrenByName(props) {
+  const children = Children.toArray(props.children)
+
   if (Array.isArray(children)) {
     return function(name) {
       return children.filter(isChildOfType(name))
     }
   }
 
-  if (Object.prototype.toString.call(children) === '[object Object]') {
-    return function(name) {
-      return [children].filter(isChildOfType(name))
-    }
-  }
-
   return []
 }
 
-function isChildOfType(name) {
-  return function(child) {
-    return child && child.type && child.type.name === name
+function isChildOfType(ctor) {
+  return ctor ? (child) => {
+    return child && child.type && child.type.name === ctor.name 
+  } : () => {
+    return false
   }
 }

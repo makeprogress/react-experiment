@@ -1,25 +1,18 @@
-import React, {PureComponent} from 'react'
+import React, {Fragment, PureComponent} from 'react'
 import PropTypes from 'prop-types'
 
 import {getChildrenByName} from '../util'
 
 export const If = ({children}) => <>{children}</>
 export const ElseIf = ({children}) => <>{children}</>
-export const Else = ({children}) => <>{children}</>
+export const Else = Fragment
 
 If.propTypes = ElseIf.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  if: PropTypes.any,
-}
-
-Else.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
+  condition: PropTypes.any,
 }
 
 export default class Condition extends PureComponent {
@@ -40,7 +33,7 @@ export default class Condition extends PureComponent {
     super(...args)
 
     const getConditionChildren = getChildrenByName(this.props)
-    const ifChildren = getConditionChildren('If')
+    const ifChildren = getConditionChildren(If)
 
     if (ifChildren.length > 1) {
       throw new Error('More than one If condition found.')
@@ -56,7 +49,7 @@ export default class Condition extends PureComponent {
       throw new Error('No If condition defined.')     
     }
 
-    const elseChildren = getConditionChildren('Else')
+    const elseChildren = getConditionChildren(Else)
 
     if (elseChildren.length > 1) {
       throw new Error('More than one Else block found.')
@@ -68,7 +61,7 @@ export default class Condition extends PureComponent {
       throw new Error('Else block must not have a condition.')
     }
 
-    const elseIfChildren = getConditionChildren('ElseIf')
+    const elseIfChildren = getConditionChildren(ElseIf)
 
     this.state = {
       else: elseChild,
@@ -99,7 +92,7 @@ export default class Condition extends PureComponent {
           }
         }
       })
-      .catch((e) => console.error(e))
+      .catch(console.error)
   }
 
   componentDidMount() {
