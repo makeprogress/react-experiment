@@ -43,9 +43,8 @@ module.exports = {
   },
   output: {
     filename: 'index.js',
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
     path: path.resolve(__dirname, 'dist'),
-    umdNamedDefine: true,
   },
   resolve: {
     alias: {
