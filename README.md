@@ -1,13 +1,13 @@
 # @toggles/react-experiment
 
-> A React component to load Toggles experiments and render active or inactive children.
+A React component to load Toggles experiments and render active or inactive children.
 
 ## Install
 
 Install with [npm](https://www.npmjs.com/).
 
 ```sh
-$ npm i -D react-experiment
+$ npm i -D @toggles/react-experiment
 ```
 
 ## Usage
