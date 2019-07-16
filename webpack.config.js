@@ -1,7 +1,5 @@
 const path = require('path')
 
-console.log(path.resolve(__dirname, 'node_modules', 'prop-types'))
-
 module.exports = {
   entry: './index.js',
   externals: {

@@ -5,8 +5,8 @@ import toggles from '@toggles/experiments'
 
 import {getChildrenByName} from '../util'
 
-export const Active = Fragment
-export const Inactive = Fragment
+export const Active = () => null
+export const Inactive = () => null
 
 export default class Experiment extends PureComponent {
   state = {}
@@ -54,22 +54,22 @@ export default class Experiment extends PureComponent {
 
   render() {
     const getExperimentChildren = getChildrenByName(this.props)
-    const [Active] = getExperimentChildren(Active)
-    const [Inactive] = getExperimentChildren(Inactive)
+    const [ActiveChild] = getExperimentChildren(Active)
+    const [InactiveChild] = getExperimentChildren(Inactive)
 
     if (this.props.showErrors && this.state.error) {
       return <div>{this.state.error}</div>
     }
 
-    if (this.state.active === true && Active) {
-      return Active.props.children
+    if (this.state.active === true && ActiveChild) {
+      return ActiveChild.props.children
     }
 
     if (
-      (this.state.active === false && Inactive) ||
-      (this.props.alwaysRenderInactive && Inactive)
+      InactiveChild && 
+      (this.state.active === false || this.props.alwaysRenderInactive)
     ) {
-      return Inactive.props.children
+      return InactiveChild.props.children
     }
 
     return null

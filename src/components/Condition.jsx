@@ -5,7 +5,7 @@ import {getChildrenByName} from '../util'
 
 export const If = ({children}) => <>{children}</>
 export const ElseIf = ({children}) => <>{children}</>
-export const Else = Fragment
+export const Else = () => null
 
 If.propTypes = ElseIf.propTypes = {
   children: PropTypes.oneOfType([
