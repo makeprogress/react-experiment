@@ -47,6 +47,6 @@
     "webpack-cli": "^3.3.4"
   },
   "dependencies": {
-    "@toggles/experiments": "^1.0.9"
+    "@toggles/experiments": "^1.0.10"
   }
 }
