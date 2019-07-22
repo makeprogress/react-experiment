@@ -7,7 +7,7 @@
     "url": "https://github.com/makeprogress/react-experiment"
   },
   "main": "dist/index.js",
-  "module": "index.js",
+  "module": "dist/index.js",
   "type": "module",
   "scripts": {
     "build": "webpack",
