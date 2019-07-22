@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import toggles from '@toggles/experiments'
 
-console.log(toggles.createExperimentClient)
-
 import {getChildrenByName} from '../util'
 
 export const Active = () => null

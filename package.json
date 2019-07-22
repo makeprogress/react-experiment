@@ -39,7 +39,7 @@
     "webpack-cli": "^3.3.4"
   },
   "dependencies": {
-    "@toggles/experiments": "^1.0.10",
+    "@toggles/experiments": "^1.0.12",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "styled-components": "^4.2.0"
