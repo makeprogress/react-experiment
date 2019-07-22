@@ -7,7 +7,7 @@
     "url": "https://github.com/makeprogress/react-experiment"
   },
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "index.js",
   "type": "module",
   "scripts": {
     "build": "webpack",
@@ -25,11 +25,6 @@
   ],
   "author": "makeprogress",
   "license": "MIT",
-  "peerDependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "styled-components": "^4.2.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
@@ -40,13 +35,13 @@
     "eslint": "^5.16.0",
     "eslint-plugin-benderthecrime": "^2.3.0",
     "eslint-plugin-react": "^7.13.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "styled-components": "^4.2.0",
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4"
   },
   "dependencies": {
-    "@toggles/experiments": "^1.0.10"
+    "@toggles/experiments": "^1.0.10",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "styled-components": "^4.2.0"
   }
 }

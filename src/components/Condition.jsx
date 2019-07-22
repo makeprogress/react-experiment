@@ -1,4 +1,4 @@
-import React, {Fragment, PureComponent} from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 
 import {getChildrenByName} from '../util'
@@ -100,10 +100,6 @@ export default class Condition extends PureComponent {
   }
 
   render() {
-    if (this.state.renderChild) {
-      return this.state.renderChild.props.children
-    }
-
     return null
   }
 }

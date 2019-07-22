@@ -1,7 +1,9 @@
-import React, {Fragment, PureComponent} from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 
 import toggles from '@toggles/experiments'
+
+console.log(toggles.createExperimentClient)
 
 import {getChildrenByName} from '../util'
 
