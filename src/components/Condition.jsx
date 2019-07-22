@@ -100,6 +100,10 @@ export default class Condition extends PureComponent {
   }
 
   render() {
+    if (this.state.renderChild) {
+      return this.state.renderChild.props.children
+    }
+
     return null
   }
 }
