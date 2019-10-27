@@ -5,6 +5,8 @@ import toggles from '@toggles/experiments'
 
 import {getChildrenByName} from '../util'
 
+const isPOJsO = (obj) => Object.prototype.toString.call(obj) === '[object Object]'
+
 export const Active = () => null
 export const Inactive = () => null
 
@@ -26,6 +28,7 @@ export default class Experiment extends PureComponent {
       PropTypes.string,
     ]),
     experimentId: PropTypes.string.isRequired,
+    rapidApiKey: PropTypes.string,
     showErrors: PropTypes.bool,
   }
 
@@ -40,12 +43,12 @@ export default class Experiment extends PureComponent {
     this.toggles = toggles.createExperimentClient({
       apiKey: this.props.apiKey,
       apiUrl: this.props.apiUrl,
+      rapidApiKey: this.props.rapidApiKey,
     })
   }
 
   componentDidMount() {
-    const contextIsPOJsO = Object.prototype.toString.call(this.props.context) === '[object Object]'
-    const context = contextIsPOJsO ? this.props.context : {uniqueId: this.props.context}
+    const context = isPOJsO(this.props.context) ? this.props.context : {uniqueId: this.props.context}
 
     return this.toggles.isExperimentActive(this.props.experimentId, context)
       .then((active) => this.setState({active}))

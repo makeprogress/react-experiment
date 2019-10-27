@@ -25,7 +25,8 @@ const AlwaysBlue = () => <div>
     apiKey="KEY" 
     context={{uniqueId: "test.user@toggles.app"}}
     experimentId="ID"
-    showErrors={false}>
+    showErrors={false}
+    rapidAPIKey="KEY">
     <Experiment.Active>
       <span red>JK, I'm red!</span>
     </Experiment.Active>
@@ -46,12 +47,15 @@ export default AlwaysBlue
 | --------------------------- | ------------- | ---------------------------------------------- | ----------------------------- |
 | alwaysRenderInactive        | bool          | Should inactive render before API response     | `false`                       |
 | apiKey                      | string        | Toggles API Key                                |                               |
-| apiUrl                      | string        | Toggles API Url                                | "https://api.toggles.co"      |
+| apiUrl                      | string        | API Url: use a RapidAPI host if using RapidAPI | "https://api.toggles.co"      |
 | context                     | object|string | Context used to uniquely identify a user       |                               |
 | experimentId                | string        | A Toggles experiment id                        |                               |
 | showErrors                  | bool          | Specifies whether API errors should be shown   | `false`                       |
+| rapidAPIKey                 | string        | RapidAPI Key                                   |                               |
 
 `context` is either of type `shape`, which supports a single property, `uniqueId`, or a string. This property represents identifying information about a user and may be used to blacklist or whitelist active experiment users.
+
+**NOTE**: If you pass a RapidAPI Key it will be used with preference to the Toggles API Key.
 
 ## Contributing
 
