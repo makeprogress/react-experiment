@@ -13,25 +13,40 @@ $ npm i -D @toggles/react-experiment
 ## Usage
 Please visit the [Toggles app online](https://toggles.app/). There, you can create an account and an experiment, configure specific users who should see the experiment, or specify a percent of users who should see the experiment.
 
-Once this is complete, copy the experiment id from the experiment card and your API key from settings (KEY and ID below). Next, include the following component in your app:
+Once this is complete, you can add an experiment provider to your app:
 
 ```jsx
 import React from 'react'
 import Experiment from '@toggles/react-experiment'
 
-const AlwaysBlue = () => <div>
-  <Experiment 
-    alwaysRenderInactive={false}
-    apiKey="KEY" 
+const MyApp = () => <div>
+  <Experiment.Provider
+    apiKey="KEY"
     context={{uniqueId: "test.user@toggles.app"}}
-    experimentId="ID"
-    showErrors={false}
-    rapidAPIKey="KEY">
+    rapidAPIKey="KEY"
+  >
+    <SomeComponent />
+  </Experiment.Provider>
+</div>
+```
+
+The `apiKey` prop will be the API key from the settings tab in the Toggles app.
+
+Next, copy an experiment id from an experiment card in the Toggles app. Add the following component, with that experiment id, in your app:
+
+```jsx
+import React from 'react'
+import Experiment from '@toggles/react-experiment'
+
+export const AlwaysBlue = () => <div>
+  <Experiment
+    alwaysRenderInactive={false}
+    experimentId="ID">
     <Experiment.Active>
       <span red>JK, I'm red!</span>
     </Experiment.Active>
     <Experiment.Inactive>
-      <span red>I'm blue! Huzzah!</span>
+      <span blue>I'm blue! Huzzah!</span>
     </Experiment.Inactive>
   </Experiment>
 </div>
@@ -41,21 +56,44 @@ export default AlwaysBlue
 
 **NOTE**: No children passed to the `Experiment` component besides `Active` or `Inactive` will be rendered.
 
+If you need access to raw experiments, you may use the `withExperiments` connector:
+
+```jsx
+import React from 'react'
+import {withExperiments} from '@toggles/react-experiment'
+
+export const AlwaysBlue = withExperiments({experiments}) => {
+  return <div>
+    {experiment['ID'].active ? 'JK, I’m red!' : 'I’m blue! Huzzah!'}
+  </div>
+})
+
+export default AlwaysBlue
+```
+
+Experiments will be made available with name, description, uuid, and active/inactive state for the provided context. For more information on using experiment contexts, please see [@toggles/experiments](https://www.npmjs.com/package/@toggles/experiments "@toggles/experiments")
+
 ## Props
+
+### Experiment.Provider
 
 | Name                        | Type          | Description                                    | Default                       |
 | --------------------------- | ------------- | ---------------------------------------------- | ----------------------------- |
-| alwaysRenderInactive        | bool          | Should inactive render before API response     | `false`                       |
 | apiKey                      | string        | Toggles API Key                                |                               |
 | apiUrl                      | string        | API Url: use a RapidAPI host if using RapidAPI | "https://api.toggles.co"      |
 | context                     | object|string | Context used to uniquely identify a user       |                               |
-| experimentId                | string        | A Toggles experiment id                        |                               |
-| showErrors                  | bool          | Specifies whether API errors should be shown   | `false`                       |
 | rapidAPIKey                 | string        | RapidAPI Key                                   |                               |
 
 `context` is either of type `shape`, which supports a single property, `uniqueId`, or a string. This property represents identifying information about a user and may be used to blacklist or whitelist active experiment users.
 
 **NOTE**: If you pass a RapidAPI Key it will be used with preference to the Toggles API Key.
+
+### Experiment.Provider
+
+| Name                        | Type          | Description                                    | Default                       |
+| --------------------------- | ------------- | ---------------------------------------------- | ----------------------------- |
+| alwaysRenderInactive        | bool          | Should inactive render before API response     | `false`                       |
+| experimentId                | string        | A Toggles experiment id                        |                               |
 
 ## Contributing
 

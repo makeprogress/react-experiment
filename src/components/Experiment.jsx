@@ -1,95 +1,60 @@
-import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 
-import toggles from '@toggles/experiments'
-
 import {getChildrenByName} from '../util'
-
-const isPOJsO = (obj) => Object.prototype.toString.call(obj) === '[object Object]'
+import {withExperiments} from './withExperiments'
 
 export const Active = () => null
 export const Inactive = () => null
 
-export default class Experiment extends PureComponent {
-  state = {}
+export const Experiment = withExperiments(({children, experimentId, experiments}) => {
+  const experiment = experiments.find(({uuid}) => uuid === experimentId)
+  const getExperimentChildren = getChildrenByName({children})
+  const [ActiveChild] = getExperimentChildren(Active)
+  const [InactiveChild] = getExperimentChildren(Inactive)
 
-  static propTypes = {
-    alwaysRenderInactive: PropTypes.bool,
-    apiKey: PropTypes.string,
-    apiUrl: PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.arrayOf(PropTypes.node),
-    ]),
-    context: PropTypes.oneOfType([
-      PropTypes.shape({
-        uniqueId: PropTypes.string,
-      }),
-      PropTypes.string,
-    ]),
-    experimentId: PropTypes.string.isRequired,
-    rapidApiKey: PropTypes.string,
-    showErrors: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    alwaysRenderInactive: false,
-    context: {},
-    showErrors: false,
-  }
-
-  constructor(...args) {
-    super(...args)
-    this.toggles = toggles.createExperimentClient({
-      apiKey: this.props.apiKey,
-      apiUrl: this.props.apiUrl,
-      rapidApiKey: this.props.rapidApiKey,
-    })
-  }
-
-  componentDidMount() {
-    const context = isPOJsO(this.props.context) ? this.props.context : {uniqueId: this.props.context}
-
-    return this.toggles.isExperimentActive(this.props.experimentId, context)
-      .then((active) => this.setState({active}))
-      .catch((e) => this.setState({error: e.message}))
-  }
-
-  render() {
-    const getExperimentChildren = getChildrenByName(this.props)
-    const [ActiveChild] = getExperimentChildren(Active)
-    const [InactiveChild] = getExperimentChildren(Inactive)
-
-    if (this.props.showErrors && this.state.error) {
-      return <div>{this.state.error}</div>
-    }
-
-    if (this.state.active === true && ActiveChild) {
-      return ActiveChild.props.children
-    }
-
-    if (
-      InactiveChild && 
-      (this.state.active === false || this.props.alwaysRenderInactive)
-    ) {
-      return InactiveChild.props.children
-    }
+  if (!experiment) {
+    console.error(
+      'Experiment with id %s not found in provided context.',
+      experimentId,
+    )
 
     return null
   }
 
-  static getDerivedStateFromError(e) {
-    return {
-      active: false,
-      error: e.message,
-    }
+  if (this.state.active === true && ActiveChild) {
+    return ActiveChild.props.children
   }
 
-  static get Active() {
-    return Active
+  if (
+    InactiveChild &&
+    (this.state.active === false || this.props.alwaysRenderInactive)
+  ) {
+    return InactiveChild.props.children
   }
 
-  static get Inactive() {
-    return Inactive
-  }
+  return null
+})
+
+Experiment.Active = Active
+Experiment.Inactive = Inactive
+
+Experiment.propTypes = {
+  alwaysRenderInactive: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
+  experimentId: PropTypes.string.isRequired,
+  experiments: PropTypes.arrayOf(PropTypes.shape({
+    active: PropTypes.bool,
+  })),
 }
+
+Experiment.defaultProps = {
+  alwaysRenderInactive: false,
+  context: {},
+  showErrors: false,
+}
+
+export default Experiment
+

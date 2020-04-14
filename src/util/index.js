@@ -1,5 +1,7 @@
 import {Children} from 'react'
 
+export const isPOJsO = (obj) => Object.prototype.toString.call(obj) === '[object Object]'
+
 export function getChildrenByName(props) {
   const children = Children.toArray(props.children)
 
@@ -14,7 +16,7 @@ export function getChildrenByName(props) {
 
 function isChildOfType(ctor) {
   return ctor ? (child) => {
-    return child && child.type && child.type.name === ctor.name 
+    return child && child.type && child.type.name === ctor.name
   } : () => {
     return false
   }
