@@ -5,4 +5,5 @@
 .storybook
 package-lock.json
 stories
+index.js
 webpack.config.js
