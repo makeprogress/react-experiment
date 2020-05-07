@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 
 import toggles from '@toggles/experiments'
@@ -58,6 +58,8 @@ ExperimentProvider.propTypes = {
     PropTypes.string,
   ]),
 }
+
+ExperimentProvider.displayName = 'ExperimentProvider'
 
 export default ExperimentProvider
 

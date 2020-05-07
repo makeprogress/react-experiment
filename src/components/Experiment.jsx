@@ -6,6 +6,9 @@ import {withExperiments} from './withExperiments'
 export const Active = () => null
 export const Inactive = () => null
 
+Active.displayName = 'Active'
+Inactive.displayName = 'Inactive'
+
 export const Experiment = withExperiments(({children, experimentId, experiments}) => {
   const experiment = experiments.find(({uuid}) => uuid === experimentId)
   const getExperimentChildren = getChildrenByName({children})
@@ -55,6 +58,8 @@ Experiment.defaultProps = {
   context: {},
   showErrors: false,
 }
+
+Experiment.displayName = 'Experiment'
 
 export default Experiment
 
