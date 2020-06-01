@@ -1,6 +1,6 @@
 {
   "name": "@toggles/react-experiment",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "A React component to load Toggles experiments and render active or inactive children.",
   "author": "makeprogress",
   "license": "MIT",
