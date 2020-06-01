@@ -99,7 +99,7 @@ Experiments will be made available with name, description, uuid, and active/inac
 
 ## Contributing
 
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/Joe%20Groseclose/react-experiment/issues).
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/makeprogress/react-experiment/issues).
 
 ## License
 
