@@ -4,12 +4,11 @@ import PropTypes from 'prop-types'
 import {ExperimentContext} from '../ExperimentContext'
 
 export const withExperiments = (Component) => {
-  const displayName = `withRouter(${Component.displayName || Component.name})`;
   const ExperimentsConnector = ({wrappedComponentRef, ...props}) => <ExperimentContext.Consumer>
     {(experiments) => <Component {...props} experiments={experiments} ref={wrappedComponentRef}/>}
   </ExperimentContext.Consumer>
 
-  ExperimentsConnector.displayName = displayName
+  ExperimentsConnector.displayName = `withExperiments(${Component.displayName || Component.name})`
   ExperimentsConnector.WrappedComponent = Component
 
   ExperimentsConnector.propTypes = {

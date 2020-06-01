@@ -29,10 +29,12 @@ export default class Condition extends PureComponent {
     children: [],
   }
 
+  static displayName = 'Condition'
+
   constructor(...args) {
     super(...args)
 
-    const getConditionChildren = getChildrenByName(this.props)
+    const getConditionChildren = getChildrenByName(Condition.displayName)
     const ifChildren = getConditionChildren(If)
 
     if (ifChildren.length > 1) {
@@ -46,7 +48,7 @@ export default class Condition extends PureComponent {
     }
 
     if (typeof getCondition(ifChild) === 'undefined') {
-      throw new Error('No If condition defined.')     
+      throw new Error('No If condition defined.')
     }
 
     const elseChildren = getConditionChildren(Else)
@@ -75,7 +77,6 @@ export default class Condition extends PureComponent {
   }
 
   _handleConditional(child) {
-    if (!child) debugger
     const condition = getCondition(child)
 
     return Promise.resolve(typeof condition === 'function' ? condition(this.props) : condition)
@@ -88,15 +89,17 @@ export default class Condition extends PureComponent {
           if (elseIf) {
             this.setState({elseIfs})
 
-            return this._handleConditional(elseIf)
+            return this._handleConditional(elseIf) // eslint-disable-line no-underscore-dangle
           }
         }
+
+        return undefined
       })
       .catch(console.error)
   }
 
   componentDidMount() {
-    return this._handleConditional(this.state.if)
+    return this._handleConditional(this.state.if) // eslint-disable-line no-underscore-dangle
   }
 
   render() {
@@ -107,8 +110,6 @@ export default class Condition extends PureComponent {
     return null
   }
 }
-
-
 
 function getCondition(child) {
   return child && child.props && child.props.condition

@@ -6,18 +6,16 @@ export function getChildrenByName(props) {
   const children = Children.toArray(props.children)
 
   if (Array.isArray(children)) {
-    return function(name) {
-      return children.filter(isChildOfType(name))
+    return function(displayName) {
+      return children.filter(isChildOfType(displayName))
     }
   }
 
   return []
 }
 
-function isChildOfType(ctor) {
-  return ctor ? (child) => {
-    return child && child.type && child.type.name === ctor.name
-  } : () => {
-    return false
+export function isChildOfType(displayName) {
+  return function({type}) {
+    return type && type.displayName && type.displayName === displayName
   }
 }

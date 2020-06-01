@@ -1,37 +1,36 @@
 import PropTypes from 'prop-types'
 
-import {getChildrenByName} from '../util'
 import {withExperiments} from './withExperiments'
+import {getChildrenByName} from '../util'
 
 export const Active = () => null
 export const Inactive = () => null
 
-Active.displayName = 'Active'
-Inactive.displayName = 'Inactive'
+Active.displayName = 'react-experiment/Active'
+Inactive.displayName = 'react-experiment/Inactive'
 
-export const Experiment = withExperiments(({children, experimentId, experiments}) => {
-  const experiment = experiments.find(({uuid}) => uuid === experimentId)
+export const Experiment = withExperiments(({
+  alwaysRenderInactive,
+  children,
+  experimentId: uuid,
+  experiments,
+}) => {
+  const experiment = experiments[uuid]
   const getExperimentChildren = getChildrenByName({children})
-  const [ActiveChild] = getExperimentChildren(Active)
-  const [InactiveChild] = getExperimentChildren(Inactive)
+  const [ActiveChild] = getExperimentChildren(Active.displayName)
+  const [InactiveChild] = getExperimentChildren(Inactive.displayName)
 
   if (!experiment) {
-    console.error(
-      'Experiment with id %s not found in provided context.',
-      experimentId,
-    )
+    console.warn('Experiment with id %s not found in provided context. It may not be loaded.', uuid)
 
     return null
   }
 
-  if (this.state.active === true && ActiveChild) {
+  if (ActiveChild && experiment.active === true) {
     return ActiveChild.props.children
   }
 
-  if (
-    InactiveChild &&
-    (this.state.active === false || this.props.alwaysRenderInactive)
-  ) {
+  if (InactiveChild && (experiment.active === false || alwaysRenderInactive)) {
     return InactiveChild.props.children
   }
 
@@ -41,6 +40,13 @@ export const Experiment = withExperiments(({children, experimentId, experiments}
 Experiment.Active = Active
 Experiment.Inactive = Inactive
 
+Experiment.defaultProps = {
+  alwaysRenderInactive: false,
+  context: {},
+  experiments: {},
+  showErrors: false,
+}
+
 Experiment.propTypes = {
   alwaysRenderInactive: PropTypes.bool,
   children: PropTypes.oneOfType([
@@ -48,18 +54,12 @@ Experiment.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]),
   experimentId: PropTypes.string.isRequired,
-  experiments: PropTypes.arrayOf(PropTypes.shape({
+  experiments: PropTypes.objectOf(PropTypes.shape({
     active: PropTypes.bool,
+    uuid: PropTypes.string,
   })),
 }
 
-Experiment.defaultProps = {
-  alwaysRenderInactive: false,
-  context: {},
-  showErrors: false,
-}
-
-Experiment.displayName = 'Experiment'
+Experiment.displayName = 'react-experiment/Experiment'
 
 export default Experiment
-

@@ -7,8 +7,10 @@ A React component to load Toggles experiments and render active or inactive chil
 Install with [npm](https://www.npmjs.com/).
 
 ```sh
-$ npm i -D @toggles/react-experiment
+$ npm i @toggles/experiments @toggles/react-experiment
 ```
+
+Please note the peer dependency, `@toggles/experiments`, which will allow you to load experiments from the Toggles API.
 
 ## Usage
 Please visit the [Toggles app online](https://toggles.app/). There, you can create an account and an experiment, configure specific users who should see the experiment, or specify a percent of users who should see the experiment.
